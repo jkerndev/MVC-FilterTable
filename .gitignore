@@ -39,6 +39,11 @@ ScaffoldingReadMe.txt
 # dotenv environment variables file
 .env
 
+# Local sample databases
+*.db
+*.db-shm
+*.db-wal
+
 # Others
 ~$*
 *~

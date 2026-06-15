@@ -1,0 +1,158 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  background: #f7f8f5;
+  color: #20231f;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+.navbar {
+  background: #ffffff;
+}
+
+.inventory-shell {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 0 2.5rem;
+}
+
+.inventory-header {
+  align-items: end;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.inventory-header h1 {
+  font-size: 1.75rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.inventory-header p {
+  color: #657065;
+  margin: 0.2rem 0 0;
+}
+
+.query-form {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: minmax(18rem, 28rem) auto;
+}
+
+.table-wrap {
+  background: #ffffff;
+  border: 1px solid #dce2dc;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.inventory-table {
+  margin: 0;
+  min-width: 720px;
+}
+
+.inventory-table th {
+  background: #eef2ec;
+  border-bottom: 1px solid #d0d8cf;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+.inventory-table th a {
+  color: #263026;
+  display: inline-flex;
+  gap: 0.35rem;
+  text-decoration: none;
+}
+
+.inventory-table td {
+  vertical-align: middle;
+}
+
+.muted-text {
+  color: #6d766b;
+  display: block;
+  font-size: 0.82rem;
+}
+
+.stock-pill {
+  border-radius: 999px;
+  display: inline-block;
+  font-size: 0.82rem;
+  padding: 0.25rem 0.55rem;
+}
+
+.stock-in {
+  background: #d9efe2;
+  color: #195334;
+}
+
+.stock-out {
+  background: #f5dddd;
+  color: #7a2424;
+}
+
+.actions-column {
+  text-align: right;
+  width: 7rem;
+}
+
+.details-panel {
+  align-items: center;
+  background: #f7f8f5;
+  border-left: 3px solid #647c90;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 0.8rem 1rem;
+}
+
+.pager {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+@media (max-width: 720px) {
+  .inventory-header {
+    align-items: stretch;
+    display: grid;
+  }
+
+  .query-form {
+    grid-template-columns: 1fr;
+  }
+
+  .details-panel {
+    align-items: start;
+    display: grid;
+  }
+}

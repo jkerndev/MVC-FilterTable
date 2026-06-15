@@ -1,0 +1,108 @@
+@model CookieShop.Mvc.ViewModels.CookieIndexViewModel
+
+@{
+    ViewData["Title"] = "Cookie Inventory";
+}
+
+<section class="inventory-shell">
+    <div class="inventory-header">
+        <div>
+            <h1>Cookie Inventory</h1>
+            <p>@Model.Table.TotalCount items</p>
+        </div>
+
+        <form method="get" class="query-form">
+            <input type="hidden" name="sort" value="@Model.Table.SortBy" />
+            <input type="hidden" name="dir" value="@Model.Table.SortDirectionText" />
+            <input type="hidden" name="pageSize" value="@Model.Table.PageSize" />
+            <label class="visually-hidden" for="q">Query</label>
+            <input id="q" name="q" value="@Model.QueryText" class="form-control" placeholder="price >= 2 and instock = true" />
+            <button class="btn btn-dark" type="submit">Search</button>
+        </form>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="alert alert-warning" role="alert">@Model.ErrorMessage</div>
+    }
+
+    <div class="table-wrap">
+        <table class="table inventory-table">
+            <thead>
+                <tr>
+                    @foreach (var column in Model.Table.VisibleColumns)
+                    {
+                        <th scope="col">
+                            <a asp-controller="Cookies"
+                               asp-action="Index"
+                               asp-route-q="@Model.QueryText"
+                               asp-route-sort="@column.Key"
+                               asp-route-dir="@Model.Table.NextSortDirectionFor(column.Key)"
+                               asp-route-page="1"
+                               asp-route-pageSize="@Model.Table.PageSize">
+                                @column.Title
+                                @if (Model.Table.IsSortedBy(column.Key))
+                                {
+                                    <span class="sort-marker">@Model.Table.SortDirectionText</span>
+                                }
+                            </a>
+                        </th>
+                    }
+                    <th scope="col" class="actions-column"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cookie in Model.Table.Items)
+                {
+                    var detailsId = $"cookie-details-{cookie.Id}";
+                    <tr>
+                        <td>
+                            <strong>@cookie.Cookie</strong>
+                            <span class="muted-text">@cookie.BatchCode</span>
+                        </td>
+                        <td>@cookie.Price.ToString("C2")</td>
+                        <td>@cookie.Number</td>
+                        <td>
+                            <span class="stock-pill @(cookie.InStock ? "stock-in" : "stock-out")">
+                                @(cookie.InStock ? "In stock" : "Sold out")
+                            </span>
+                        </td>
+                        <td class="actions-column">
+                            <button class="btn btn-sm btn-outline-secondary details-toggle" type="button" data-target="@detailsId">Details</button>
+                        </td>
+                    </tr>
+                    <tr id="@detailsId" class="details-row" hidden>
+                        <td colspan="5">
+                            <div class="details-panel">
+                                <span>@cookie.Notes</span>
+                                <span>Batch @cookie.BatchCode</span>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <nav class="pager" aria-label="Cookie pages">
+        <a class="btn btn-outline-dark @(Model.Table.HasPreviousPage ? null : "disabled")"
+           asp-controller="Cookies"
+           asp-action="Index"
+           asp-route-q="@Model.QueryText"
+           asp-route-sort="@Model.Table.SortBy"
+           asp-route-dir="@Model.Table.SortDirectionText"
+           asp-route-page="@(Model.Table.PageNumber - 1)"
+           asp-route-pageSize="@Model.Table.PageSize">Previous</a>
+
+        <span>Page @Model.Table.PageNumber of @Model.Table.TotalPages</span>
+
+        <a class="btn btn-outline-dark @(Model.Table.HasNextPage ? null : "disabled")"
+           asp-controller="Cookies"
+           asp-action="Index"
+           asp-route-q="@Model.QueryText"
+           asp-route-sort="@Model.Table.SortBy"
+           asp-route-dir="@Model.Table.SortDirectionText"
+           asp-route-page="@(Model.Table.PageNumber + 1)"
+           asp-route-pageSize="@Model.Table.PageSize">Next</a>
+    </nav>
+</section>
